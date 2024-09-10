@@ -1,0 +1,50 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Report {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  injuryTime    DateTime
+
+  reporter      Reporter  @relation(fields: [reporterId], references: [id])
+  reporterId    String    @db.ObjectId
+  admin         Admin     @relation(fields: [adminId], references: [id])
+  adminId       String    @db.ObjectId
+
+  injuries      Injury[]
+
+  createdAt     DateTime  @default(now())
+}
+
+model Reporter {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  email         String    @unique
+  name          String?
+
+  reports       Report[]  // Relation to the reports created for this reporter
+
+  
+}
+
+model Admin {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  email         String    @unique
+  name          String?
+  adminReports  Report[]  // Relation to the reports created by this admin
+
+  
+}
+
+model Injury {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  details       String
+  report        Report    @relation(fields: [reportId], references: [id])
+  reportId      String    @db.ObjectId
+}
+
