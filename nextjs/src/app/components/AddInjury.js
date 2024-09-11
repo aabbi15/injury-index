@@ -1,27 +1,34 @@
 'use client'
-import { Layout, Breadcrumb, Card } from 'antd';
+import { Layout, Breadcrumb, Card, Button,Input } from 'antd';
 import { useUser } from '@auth0/nextjs-auth0/client';
 
-import { useState } from 'react';
+import { DatePicker, Space } from 'antd';
 
-import Main from '../../../public/mainmapper.svg';
-import Test from '../../../public/foundthis.svg';
-import Image from 'next/image';
-// import { set } from '@auth0/nextjs-auth0/dist/session';
-// import BodyMap from './bodymap';
+
+import { useState, useEffect } from 'react';
+
+
+import InjuryInputCard from './injuryinputcard';
+
 
 
 const { Content } = Layout;
 
 export default function AddInjury() {
 
-//     const { user, error, isLoading } = useUser();
-// // 
-//     console.log(user, error);
 
-const [leftFootColor, setLeftFootColor] = useState('#EEEEEE'); 
 
-const[color, setColor] = useState( {
+      
+  const { user, error, isLoading } = useUser();
+  
+
+      // if(isLoading) return <div>Loading...</div>
+      // console.log(user, error);
+
+  const [injuries, setInjuries] = useState([]);
+
+
+  const [color, setColor] = useState({
     "Front": { selected: false, number: 0 },
     "Back": { selected: false, number: 0 },
     "Trapezius": { selected: false, number: 0 },
@@ -71,33 +78,61 @@ const[color, setColor] = useState( {
     "Left_Neck": { selected: false, number: 0 },
     "Right_Foot": { selected: false, number: 0 },
     "Left_Foot": { selected: false, number: 0 }
-}
-);
+  }
+  );
 
-const toggleFootColor = (e) => {
-    console.log(typeof(e.target), e.target.id);
-    setLeftFootColor(prevColor => (prevColor === '#EEEEEE' ? 'red' : '#EEEEEE'));
-  };
+  const [injuryDetails, setInjuryDetails] = useState({});
+
+  const handleInputChange = (str, value) => {
+    setInjuryDetails(prevDetails => ({
+        ...prevDetails,
+        [str]: value
+    }));
+   
+
+    // console.log(injuryDetails);
+};
 
   const handleClick = (str) => {
-   
     setColor(prevColor => {
-        return {
-            ...prevColor,
-            [str]: {
-                selected: !prevColor[str].selected,
-                number: prevColor[str].selected ? prevColor[str].number - 1 : prevColor[str].number + 1
-            }
+      const newColor = {
+        ...prevColor,
+        [str]: {
+          selected: !prevColor[str].selected,
+          number: !prevColor[str].number
         }
-    });
-  }
+      };
 
+      // Update injuries state immediately after color state is updated
+      const newInjuries = newColor[str].selected
+        ? [...injuries, str]
+        : injuries.filter(injury => injury !== str);
+
+      setInjuries(newInjuries);
+
+      RenderCards();
+
+      return newColor;
+    });
+  };
+
+
+
+  function onSubmit(e) {
+    
+    const { email } = user;
+
+    console.log(email,injuryDetails);
+
+
+  }
 
   const fillColor = (str) => {
 
     // console.log(str);
-    if(color[str].selected) {
-      return 'red'}
+    if (color[str].selected) {
+      return 'red'
+    }
     else {
       return '#000000'
     }
@@ -118,7 +153,7 @@ const toggleFootColor = (e) => {
       {...props}
     >
       <style type="text/css">
-      {`
+        {`
       .st0 { fill: #EEEEEE; stroke: #000000; stroke-linejoin: round; stroke-miterlimit: 1.4142; }
       .st1 { stroke: #000000; stroke-width: 1.0427; stroke-linejoin: round; stroke-miterlimit: 1.4142; }
       #Back-Muscles path:hover { fill: orange; }
@@ -141,67 +176,68 @@ const toggleFootColor = (e) => {
             id="Trapezius"
             d="M450.5,265.3c0.3,1.3,2.6-10.3,5.4-9c2.9,1.3,6.4,9,6.4,8.7c-0.9-9.5,7.6-24.2,13.8-34.3 c6.7-10.9,10.2-11.5,14.7-25.6c1.8-5.6,0-42.3,7.7-55.8c7.7-13.5,13.1-12.1,18.9-15.4c1.3-0.7-47.2-4.6-51.4-37.3 c-0.7-5.4-0.7-10.3,0.1-15.3c0.9-4.9-25.2-6.9-26.6-0.3c-2.1,10.1,15.9,39-45.5,48.4c-4.3,0.7,12.7,7.2,22.1,21.5 c2.3,3.5,2.2,11.7,9.3,58C427,219.3,447.4,249.9,450.5,265.3L450.5,265.3z"
             fill={fillColor("Trapezius")}
-          onClick={() => handleClick("Trapezius")}
+            onClick={() => handleClick("Trapezius")}
           />
           <path
             id="Right_Lat"
             d=" M 466.966 262.182 C 466.966 262.182 484.551 280.067 486.45 290.758 C 488.348 301.449 488.348 317.736 497.541 316.237 C 497.641 316.237 494.443 312.241 498.64 304.947 C 513.228 279.867 512.628 250.692 512.628 250.692 L 513.927 204.93 C 513.927 204.93 505.334 207.827 494.543 200.733 C 492.345 199.334 493.644 217.319 483.252 226.712 C 478.856 230.508 462.77 251.491 466.966 262.182 L 466.966 262.182 Z "
             fill={fillColor("Right_Lat")}
-          onClick={() => handleClick("Right_Lat")}
+            onClick={() => handleClick("Right_Lat")}
           />
           <path
             id="Left_Lat"
             d=" M 444.185 262.182 C 444.185 262.182 426.6 280.067 424.701 290.758 C 422.803 301.449 425.201 316.499 416.008 315 C 415.908 315 416.708 312.241 412.511 304.947 C 397.923 279.867 397.224 250.692 397.224 250.692 L 397.224 207 C 397.224 207 405.817 207.827 416.608 200.733 C 418.806 199.334 417.507 217.319 427.898 226.712 C 432.295 230.508 448.381 251.491 444.185 262.182 L 444.185 262.182 Z "
             fill={fillColor("Left_Lat")}
-          onClick={() => handleClick("Left_Lat")}
+            onClick={() => handleClick("Left_Lat")}
           />
           <path
             id="Right_Tricep"
             d=" M 516.825 170.958 C 516.825 170.958 529.714 163.364 534.31 165.562 C 538.906 167.761 547.299 181.749 548.298 187.544 C 546.994 202.329 551 239.101 551 239.101 C 551 239.101 551.895 244.896 547.299 246.295 C 542.803 247.694 543.403 234.405 540.005 232.906 C 536.608 231.408 539.805 243.198 536.408 244.197 C 533.011 245.096 522.92 241 522.92 241 L 515.326 222.015 C 515.226 222.015 522.42 181.149 516.825 170.958 L 516.825 170.958 Z "
             fill={fillColor("Right_Tricep")}
-          onClick={() => handleClick("Right_Tricep")}
+            onClick={() => handleClick("Right_Tricep")}
           />
           <path
             id="Left_Tricep"
             d=" M 393.727 170.059 C 393.727 170.059 380.838 162.365 376.241 164.563 C 371.645 166.761 363.252 180.95 362.253 186.845 C 362.702 204.289 360 238 360 238 C 360 238 358.656 244.896 363.252 246.295 C 367.748 247.694 367.149 234.205 370.546 232.707 C 373.943 231.208 370.746 243.198 374.143 244.097 C 377.54 244.996 387.632 240.9 387.632 240.9 L 395.226 221.716 C 395.326 221.716 388.132 180.35 393.727 170.059 Z "
             fill={fillColor("Left_Tricep")}
-          onClick={() => handleClick("Left_Tricep")}
+            onClick={() => handleClick("Left_Tricep")}
           />
           <path
             id="Left_Glute"
             d="M404.4,312.3c2.8-0.5,47.1,21.6,49.5,55.8c2.4,34.1-24.1,46.4-46.5,40.4c-22.4-6-20.7-32.7-20.1-39.1 c0.4-4.6,4.4-14.9,8-39.8C396,325.2,401.6,312.8,404.4,312.3L404.4,312.3z"
             fill={fillColor("Left_Glute")}
-          onClick={() => handleClick("Left_Glute")}
+            onClick={() => handleClick("Left_Glute")}
           />
           <path
             id="Right_Glute"
             d="M512.8,316.5c-2.5-1-47.2,12.3-55.6,45.3c-8.3,33,13.9,50.1,35.6,48.5c21.7-1.6,24.9-28.1,25.5-34.5 c0.4-4.6-1.4-15.4-0.3-40.6C518.2,330.8,515.3,317.5,512.8,316.5L512.8,316.5z"
             fill={fillColor("Right_Glute")}
-          onClick={() => handleClick("Right_Glute")}
+            onClick={() => handleClick("Right_Glute")}
           />
           <path
             id="Right_Hamstring"
             d=" M 465.967 411.958 C 465.967 411.958 508.831 413.656 515.626 407.661 C 522.42 401.666 521.221 441.335 512.628 483 C 506.68 524.076 510.199 525.099 509 524 C 499.352 516.801 495.942 498.386 495.342 498.885 C 494.843 499.285 475.559 527.761 478.656 549.943 C 478.856 551.242 462.698 449.227 460 436.837 C 457.202 424.647 455.436 412.108 465.967 411.958 L 465.967 411.958 Z "
             fill={fillColor("Right_Hamstring")}
-          onClick={() => handleClick("Right_Hamstring")}
+            onClick={() => handleClick("Right_Hamstring")}
           />
+
           <path
             id="Left_Hamstring"
             d=" M 444.685 411.958 C 444.685 411.958 402.02 413.656 395.226 407.661 C 388.431 401.666 388.631 440.334 397.224 481.999 C 402.501 521.507 399.801 526.099 401 525 C 409.559 518.762 414.809 498.386 415.409 498.885 C 415.908 499.285 435.093 527.761 431.995 549.943 C 431.795 551.242 447.682 443.39 450.38 431 C 453.078 418.81 453.277 412.357 444.685 411.958 Z "
             fill={fillColor("Left_Hamstring")}
-          onClick={() => handleClick("Left_Hamstring")}
+            onClick={() => handleClick("Left_Hamstring")}
           />
           <path
             id="Right_Calf"
             d=" M 496.741 528.96 C 496.741 528.96 477.257 553.64 475.959 563.732 C 472.885 582.676 477.198 619.534 477.957 630.976 C 480.655 637.17 493.944 617.187 497.241 604.697 C 500.538 592.208 493.707 616.288 502 625.28 C 503.399 626.779 518.762 576.402 515.326 559 C 511.534 541.504 510.135 541.504 509 534 C 508.567 517.978 501.837 528.96 500.238 536.354 C 498.64 543.748 496.741 528.96 496.741 528.96 L 496.741 528.96 Z "
             fill={fillColor("Right_Calf")}
-          onClick={() => handleClick("Right_Calf")}
+            onClick={() => handleClick("Right_Calf")}
           />
           <path
             id="Left_Calf"
             d=" M 414.51 528.96 C 414.51 528.96 433.701 554.908 435 565 C 436.511 589.826 432.89 616.005 431.995 630.976 C 429.297 637.17 417.307 617.187 414.01 604.697 C 410.713 592.208 417.293 616.288 409 625.28 C 407.601 626.779 392.857 581.191 395.226 563.732 C 396.815 544.641 403.499 541.491 402 531 C 403.089 522.291 409.414 528.96 411.013 536.354 C 412.611 543.748 414.51 528.96 414.51 528.96 L 414.51 528.96 Z "
             fill={fillColor("Left_Calf")}
-          onClick={() => handleClick("Left_Calf")}
+            onClick={() => handleClick("Left_Calf")}
           />
         </g>
         <path
@@ -254,7 +290,7 @@ const toggleFootColor = (e) => {
         />
         <path
           id="Left_Hand_Fingers"
-          
+
           d=" M 324 362 C 324 362 343.314 332.934 351.278 364.618 C 351.278 364.618 357.807 388.162 334.691 386 C 334.691 386 316.288 376.02 324 362 Z "
           fill={fillColor("Left_Hand_Fingers")}
           onClick={() => handleClick("Left_Hand_Fingers")}
@@ -427,50 +463,127 @@ const toggleFootColor = (e) => {
     </svg>
   );
 
-    return (
-        <div>
-            <Content
-                style={{
-                    margin: '0 16px',
+  const onOk = (value) => {
+    // console.log('onOk: ', value);
+  };
+
+  const changeDate = (value, dateString) => {
+    console.log('Selected Time: ', value);
+    console.log('Formatted Selected Time: ', dateString);
+  };
+
+
+
+  function RenderCards() {
+    return injuries.map((key) => (
+        <InjuryInputCard key={key} str={key} handleInputChange={handleInputChange} />
+    ));
+}
+
+  // function RenderCards() {
+
+
+  //   let allcards = [];
+  //   console.log("render", injuries);
+  //   injuries.map((key) => {
+
+
+  //     allcards.push(<InjuryInputCard str={key} />);
+
+
+  //   });
+
+  //   console.log(allcards);
+  //   return allcards;
+  // }
+
+  return (
+    <div>
+      <Content
+        style={{
+          margin: '0 16px',
+        }}
+      >
+        <Breadcrumb
+          style={{
+            margin: '16px 0',
+          }}
+        >
+          <Breadcrumb.Item>Add Injury</Breadcrumb.Item>
+          <Breadcrumb.Item>New</Breadcrumb.Item>
+        </Breadcrumb>
+        <div
+          style={{
+            padding: 24,
+            minHeight: 550,
+            background: "#ffffff",
+            borderRadius: 8,
+          }}
+
+
+        >
+
+          <div className=' mt-10  grid grid-cols-5 gap-10'>
+
+
+            <div className='  col-span-3 '>
+
+              <div className='max-h-[800px] border border-gray-500'>
+                <BodyMap />
+              </div>
+
+              <div className='flex mt-2 justify-end' >
+                <Button type="primary" onClick={onSubmit}>Submit Injury Report</Button>
+              </div>
+
+
+            </div>
+
+            <div className='col-span-2 w-full '>
+              
+
+            <div className='w-full flex-row gap-2 mb-3 '>
+                <div className='w-full text-md'>Enter name of the Reporter</div>
+                <Input placeholder="Alex Williams" className='w-[250px]' size='large' />;
+              </div>
+
+              <div className='w-full flex-row gap-2 mb-3 '>
+                <div className='w-full text-md'>Enter email of the Reporter</div>
+                <Input placeholder="alex@gmail.com" className='w-[250px]' size='large' />;
+              </div>
+
+
+              <div className='w-full flex-row mb-6 pb-3 border-b-2'>
+
+                <div className='w-full text-md'>Choose Date and Time of the Injury</div>
+                <DatePicker
+                showTime
+                size='large'
+                className='w-[250px]'
+                onChange={(value, dateString) => {
+                 changeDate(value, dateString);
                 }}
-            >
-                <Breadcrumb
-                    style={{
-                        margin: '16px 0',
-                    }}
-                >
-                    <Breadcrumb.Item>Add Injury</Breadcrumb.Item>
-                    <Breadcrumb.Item>New</Breadcrumb.Item>
-                </Breadcrumb>
-                <div
-                    style={{
-                        padding: 24,
-                        minHeight: 550,
-                        background: "#ffffff",
-                        borderRadius: 8,
-                    }}
+                onOk={onOk}
+              />
 
+              </div>
 
-                >
+              <div>
 
-                    <div className='div  mt-20  flex justify-center'>
+                <div className=' text-lg font-bold'> List of injuries </div>
+              {
+                RenderCards()
+              }
+              </div>
+              
+              
+            </div>
+          </div>
 
-                       {/* <img src='mainmapper.png' alt='mainmapper'>
-                       </img> */}
-                       {/* <Image 
-                        src={Test}
-                        alt='mainmapper'
-                        width={500}
-                        height={500}
-                       /> */}
-
-                       <BodyMap/>
-                    </div>
-
-
-                </div>
-            </Content>
 
         </div>
-    )
+      </Content>
+
+    </div>
+  )
 }
