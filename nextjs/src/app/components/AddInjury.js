@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 
 
 import InjuryInputCard from './injuryinputcard';
+import { convertToMongoDateTime } from '@/helpers/datetime';
 
 
 
@@ -468,8 +469,10 @@ export default function AddInjury() {
   };
 
   const changeDate = (value, dateString) => {
-    console.log('Selected Time: ', value);
-    console.log('Formatted Selected Time: ', dateString);
+    
+
+    console.log(convertToMongoDateTime(dateString));
+
   };
 
 

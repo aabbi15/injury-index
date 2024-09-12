@@ -12,10 +12,10 @@ model Report {
 
   injuryTime    DateTime
 
-  reporter      Reporter  @relation(fields: [reporterId], references: [id])
-  reporterId    String    @db.ObjectId
-  admin         Admin     @relation(fields: [adminId], references: [id])
-  adminId       String    @db.ObjectId
+  reporter      Reporter  @relation(fields: [reporterEmail], references: [email])
+  reporterEmail    String    
+  admin         Admin     @relation(fields: [adminEmail], references: [email])
+  adminEmail       String    
 
   injuries      Injury[]
 
@@ -43,8 +43,11 @@ model Admin {
 
 model Injury {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  bodyPart      String
   details       String
   report        Report    @relation(fields: [reportId], references: [id])
   reportId      String    @db.ObjectId
 }
+
+
 
