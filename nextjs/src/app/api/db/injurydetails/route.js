@@ -22,6 +22,11 @@ export async function POST(req,res){
         }
     })
 
+    if(report.length == 0){
+
+        return NextResponse.json({error:"No such report found"});
+    }
+
     const injuries = await prisma.injury.findMany({
 
         where: {

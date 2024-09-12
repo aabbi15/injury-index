@@ -21,6 +21,11 @@ const ReportDetails = ({reportId}) => {
 
   useEffect(() => {
     axios.post('/api/db/injurydetails',{reportId}).then((response) => {
+
+      if(response.data.error){
+        alert(response.data.error);
+        return;
+      }
       console.log(response.data);
 
       setData(response.data);
@@ -82,6 +87,23 @@ const ReportDetails = ({reportId}) => {
     },
   ];
   
+
+  async function onDelete(){
+    setLoading(true);
+    axios.post('/api/db/deletereport',{reportId}).then((response) => {
+
+      if(response.data.error){
+        alert(response.data.error);
+        return;
+      }
+      console.log(response.data);
+      setLoading(false);
+      alert("Report deleted successfully");
+      window.location.href = '/';
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
  
   if(loading){return <Loading/>}
 
@@ -107,7 +129,7 @@ const ReportDetails = ({reportId}) => {
 
       <div className='flex justify-center items-center gap-10 my-5'>
       <Button type="primary">Go back</Button>
-      <Button danger>
+      <Button danger onClick={onDelete}>
         Delete Report
       </Button>
       </div>

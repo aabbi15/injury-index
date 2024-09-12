@@ -46,7 +46,7 @@ export default function ViewInjury(){
     const [req, setReq] = React.useState({method: "none"});
     const [data,setData] = React.useState([]);
 
-    const [reportId,setReportId] = React.useState("66e21348bb0d45ac972a055e");
+    const [reportId,setReportId] = React.useState("66e28930bb0d45ac972a0567");
 
     if(reportId != ""){
         return <ReportDetails reportId={reportId}/>
