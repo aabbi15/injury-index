@@ -1,12 +1,5 @@
 import prisma from "../../../../lib/prisma"
 import { NextResponse } from 'next/server';
-// nextjs\src\lib\prisma.js
-// POST /api/post
-// Required fields in body: title, authorEmail
-
-// Optional fields in body: content
-
-// console.log(prisma);
 
 export async function POST(req, res) {
     

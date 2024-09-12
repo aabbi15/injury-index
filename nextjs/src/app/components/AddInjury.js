@@ -2,14 +2,17 @@
 import { Layout, Breadcrumb, Card, Button,Input } from 'antd';
 import { useUser } from '@auth0/nextjs-auth0/client';
 
-import { DatePicker, Space } from 'antd';
+import { DatePicker } from 'antd';
 
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'
 
 
 import InjuryInputCard from './injuryinputcard';
 import { convertToMongoDateTime } from '@/helpers/datetime';
+
+import axios from 'axios';
 
 
 
@@ -17,14 +20,17 @@ const { Content } = Layout;
 
 export default function AddInjury() {
 
-
+  // adminEmail, injuryDetails, reporterEmail,reporterName, injuryTime
+  const router = useRouter()
 
       
   const { user, error, isLoading } = useUser();
-  
 
-      // if(isLoading) return <div>Loading...</div>
-      // console.log(user, error);
+  const [reporterEmail,setreporterEmail] = useState("");
+  const [reporterName,setreporterName] = useState("");
+  
+  const [injuryTime, setInjuryTime] = useState ((new Date()).toISOString() );
+     
 
   const [injuries, setInjuries] = useState([]);
 
@@ -121,9 +127,23 @@ export default function AddInjury() {
 
   function onSubmit(e) {
     
-    const { email } = user;
+    const adminEmail = user.email;
 
-    console.log(email,injuryDetails);
+    
+
+    const req = {adminEmail, injuryDetails, reporterEmail,reporterName, injuryTime};
+
+    axios.post('/api/db/addreport', req)
+    .then(function (response) {
+
+      alert("Report added successfully");
+      // window.location.reload();
+      setreporterName("");
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
 
   }
@@ -465,13 +485,14 @@ export default function AddInjury() {
   );
 
   const onOk = (value) => {
-    // console.log('onOk: ', value);
+    
   };
 
   const changeDate = (value, dateString) => {
     
 
-    console.log(convertToMongoDateTime(dateString));
+    
+    setInjuryTime(convertToMongoDateTime(dateString));
 
   };
 
@@ -483,22 +504,7 @@ export default function AddInjury() {
     ));
 }
 
-  // function RenderCards() {
 
-
-  //   let allcards = [];
-  //   console.log("render", injuries);
-  //   injuries.map((key) => {
-
-
-  //     allcards.push(<InjuryInputCard str={key} />);
-
-
-  //   });
-
-  //   console.log(allcards);
-  //   return allcards;
-  // }
 
   return (
     <div>
@@ -547,12 +553,12 @@ export default function AddInjury() {
 
             <div className='w-full flex-row gap-2 mb-3 '>
                 <div className='w-full text-md'>Enter name of the Reporter</div>
-                <Input placeholder="Alex Williams" className='w-[250px]' size='large' />;
+                <Input placeholder="Alex Williams" className='w-[250px]' size='large' onChange={(e)=>setreporterName(e.target.value)}/>;
               </div>
 
               <div className='w-full flex-row gap-2 mb-3 '>
                 <div className='w-full text-md'>Enter email of the Reporter</div>
-                <Input placeholder="alex@gmail.com" className='w-[250px]' size='large' />;
+                <Input placeholder="alex@gmail.com" className='w-[250px]' size='large' onChange={(e)=>setreporterEmail(e.target.value)} />;
               </div>
 
 

@@ -20,6 +20,7 @@ import { Breadcrumb, Layout, Menu, theme } from 'antd';
 
 import Profile from './components/Profile';
 import AddInjury from './components/AddInjury';
+import ViewInjury from './components/ViewInjury';
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -115,7 +116,9 @@ const App = () => {
         </Header>
 
        {/* <Profile/> */}
-       <AddInjury/>
+       {/* <AddInjury/> */}
+
+       <ViewInjury/>
 
         <Footer
           style={{

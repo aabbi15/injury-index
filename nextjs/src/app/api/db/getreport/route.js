@@ -12,9 +12,9 @@ export async function POST(req, res) {
     
   // console.log(req);
   const body = await req.json(); 
-  const  filterby  = body.filterby;
+  // const  body  = body.body;
 
-  const method = filterby.method;
+  const method = body.method;
 
   let result = {}
 
@@ -23,7 +23,7 @@ export async function POST(req, res) {
 
   if(method=="admin"){
 
-    const adminEmail = filterby.adminEmail;
+    const adminEmail = body.adminEmail;
 
     const reports = await prisma.report.findMany({
       where: {
@@ -35,8 +35,8 @@ export async function POST(req, res) {
 
   else if(method=="reporter"){
 
-    const reporterEmail = filterby.reporterEmail;
-    const reporterName = filterby.reporterName;
+    const reporterEmail = body.reporterEmail;
+    const reporterName = body.reporterName;
 
     const reports = await prisma.report.findMany({
       where: {
@@ -75,8 +75,8 @@ export async function POST(req, res) {
   }
 
   else if(method=="daterange"){
-    const startdate = filterby.startdate;
-    const enddate = filterby.enddate;
+    const startdate = body.startdate;
+    const enddate = body.enddate;
 
     const reports = await prisma.report.findMany({
       where: {
