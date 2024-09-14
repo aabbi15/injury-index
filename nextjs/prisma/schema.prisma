@@ -1,3 +1,12 @@
+// This schema defines the data model for an injury reporting system using Prisma with MongoDB.
+// It includes models for Report, Reporter, Admin, and Injury, and their relationships.
+
+// The Report model represents an injury report, which includes the injury time, 
+// references to the reporter and admin, and a list of injuries.
+// The Reporter model represents a person who reports injuries, with a relation to their reports.
+// The Admin model represents an admin who manages reports, with a relation to the reports they manage.
+// The Injury model represents details of an injury, with a relation to the report it belongs to.
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")

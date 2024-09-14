@@ -1,5 +1,18 @@
+
+// We are going to be adding a new report to the database.
+//  This will involve adding a new admin, reporter, report and injuries. 
+// We will be using the prisma client to interact with the database.
+// We will be returning the newly created admin, reporter, report and injuries.
+
+//We will add admin and reporter if they are not already present in the database.
+// Skip that part if they are already present. And fetch their id.
+// Add the report and fetch the report id.
+// Add the injuries and fetch the injury ids.
+
 import prisma from "../../../../lib/prisma"
 import { NextResponse } from 'next/server';
+
+
 
 export async function POST(req, res) {
     
@@ -14,7 +27,7 @@ const result = []
     },
   });
 
-  console.log(adminpresent.length);
+  // console.log(adminpresent.length);
 
   if(adminpresent.length === 0){
     
@@ -24,7 +37,7 @@ const result = []
       },
     });
 
-    console.log(temp);
+    // console.log(temp);
     result.push(temp);
   }
 
@@ -44,11 +57,11 @@ const result = []
       },
     });
 
-    console.log(temp);
+    // console.log(temp);
     result.push(temp);
   }
 
-  const injuryids =[];
+
   
   const tempy = await prisma.report.create({
     data: {
@@ -63,7 +76,7 @@ const result = []
 
   for (const [key, value] of Object.entries(injuryDetails)) {
 
-    console.log(key, value);
+    // console.log(key, value);
     const injury = await prisma.injury.create({
       data: {
         bodyPart: key,
@@ -72,7 +85,7 @@ const result = []
       },
     });
 
-    console.log(injury);
+    // console.log(injury);
     result.push(injury);
 
     // injuryids.push(injury.id);

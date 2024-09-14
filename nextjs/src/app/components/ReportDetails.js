@@ -23,7 +23,7 @@ const ReportDetails = ({reportId}) => {
   
 
   useEffect(() => {
-    axios.post('/api/db/injurydetails',{reportId}).then((response) => {
+    axios.post('/api/db/reportdetails',{reportId}).then((response) => {
 
       if(response.data.error){
         alert(response.data.error);

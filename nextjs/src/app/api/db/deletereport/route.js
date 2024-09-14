@@ -1,3 +1,10 @@
+//since there is cascading on for the relation between injuries and reports, deleteion of the report
+// automatically deletes the injuries associated with it.
+
+// Hence, we can directly delete the report and the injuries will be deleted automatically.
+
+
+
 import prisma from "../../../../lib/prisma"
 import { NextResponse } from 'next/server';
 
@@ -9,26 +16,7 @@ export async function POST(req, res) {
 
 let result = []
 
-let todelete = await prisma.injury.findMany({
-    where: {
-      reportId: reportId,
-    },
-    });
 
-    console.log(todelete);
-
-    
-    todelete.map( async (item) => {
-        const report = await prisma.injury.delete({
-            where: {
-              id: item.id,
-            },
-            });
-        
-            console.log(report);
-        
-            result.push(report);
-    })
     
 
     const report2 = await prisma.report.delete({
@@ -37,7 +25,7 @@ let todelete = await prisma.injury.findMany({
     },
     });
 
-    console.log(report2);
+    // console.log(report2);
 
     result.push(report2);
  

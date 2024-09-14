@@ -1,18 +1,25 @@
+
+//we will send required data on the basis of what method is selected for filtering
+//if no method is selected then we will send all the reports
+//if admin is selected then we will send reports associated with that admin
+//if reporter is selected then we will send reports associated with that reporter
+//if oldestreport is selected then we will send reports in ascending order of their creation time
+//if latestreport is selected then we will send reports in descending order of their creation time
+//if oldestinjury is selected then we will send reports in ascending order of their injury time
+//if latestinjury is selected then we will send reports in descending order of their injury time
+//if daterange-report is selected then we will send reports in the given date range
+//if daterange-injury is selected then we will send reports in the given date range
+
+
 import prisma from "../../../../lib/prisma"
 import { NextResponse } from 'next/server';
-// nextjs\src\lib\prisma.js
-// POST /api/post
-// Required fields in body: title, authorEmail
 
-// Optional fields in body: content
-
-// console.log(prisma);
 
 export async function POST(req, res) {
     
   // console.log(req);
   const body = await req.json(); 
-  // const  body  = body.body;
+
 
   const method = body.method;
 
@@ -145,7 +152,7 @@ export async function POST(req, res) {
   else{
     const reports = await prisma.report.findMany();
 
-    console.log(reports);
+    // console.log(reports);
     result  = reports;
   }
 
@@ -160,7 +167,7 @@ export async function POST(req, res) {
   
 
 
- console.log(result)
+//  console.log(result)
   return NextResponse.json(result)
 
 
