@@ -21,8 +21,8 @@ import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { useRouter } from 'next/navigation';
 
 import Profile from '../components/Profile';
-import AddInjury from '../components/AddInjury';
-import ViewInjury from './AllReports';
+import AddInjury from '../lead/AddReport';
+import ViewInjury from '../AllReports';
 
 import mylogo from '../../../public/lief-main-logo.svg';
 import Image from 'next/image';

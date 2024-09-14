@@ -5,11 +5,11 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { DatePicker } from 'antd';
 
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 
 
-import InjuryInputCard from './injuryinputcard';
+import InjuryInputCard from '../support/injuryinputcard';
 import { convertToMongoDateTime } from '@/helpers/datetime';
 
 import axios from 'axios';
@@ -18,10 +18,10 @@ import axios from 'axios';
 
 const { Content } = Layout;
 
-export default function AddInjury() {
+export default function AddReport() {
 
   // adminEmail, injuryDetails, reporterEmail,reporterName, injuryTime
-  const router = useRouter()
+
 
       
   const { user, error, isLoading } = useUser();
@@ -125,7 +125,7 @@ export default function AddInjury() {
 
 
 
-  function onSubmit(e) {
+  function onSubmit() {
     
     const adminEmail = user.email;
 
@@ -139,7 +139,7 @@ export default function AddInjury() {
       alert("Report added successfully");
       // window.location.reload();
       setreporterName("");
-      console.log(response);
+      // console.log(response);
     })
     .catch(function (error) {
       console.log(error);

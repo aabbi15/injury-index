@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 
 
 import AllReports from '../components/AllReports';
-import MySider from '../components/mysider';
+import MySider from '../components/layout/mysider';
 
 
 const { Header, Content, Footer, Sider } = Layout;

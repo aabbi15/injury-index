@@ -4,7 +4,7 @@ import { Button, Flex } from 'antd';
 
 import { Descriptions } from 'antd';
 import axios from 'axios';
-import Loading from './Loading';
+import Loading from './support/Loading';
 import { useRouter } from 'next/navigation';
 
 

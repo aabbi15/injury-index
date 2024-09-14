@@ -8,9 +8,9 @@ import {  Layout } from 'antd';
 
 
 
-import Profile from '../components/Profile';
-import MySider from '../components/mysider';
-import MyFooter from '../components/MyFooter';
+import Profile from '../components/lead/Profile';
+import MySider from '../components/layout/mysider';
+import MyFooter from '../components/layout/MyFooter';
 
 
 
