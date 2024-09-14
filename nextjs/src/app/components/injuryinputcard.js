@@ -2,10 +2,18 @@ import React from 'react';
 import { Card, Space, Input } from 'antd';
 const { TextArea } = Input;
 
+import { useEffect } from 'react';
+
 export default function InjuryInputCard({ str, handleInputChange }) {
 
     if(!str) str = "body part";
 
+    
+
+    useEffect(() => {
+        handleInputChange(str, "");
+    }, []);
+    
     const onChange = (e) => {
         handleInputChange(str, e.target.value);
     };
