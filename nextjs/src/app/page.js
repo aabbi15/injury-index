@@ -1,3 +1,6 @@
+//redirects to other routes based on logged in status
+
+
 import { getSession } from '@auth0/nextjs-auth0';
 import { redirect } from 'next/navigation';
 

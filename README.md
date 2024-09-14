@@ -50,18 +50,7 @@ export async function POST(req, res) {
   - Accepts a report ID as the request body.
   - Deletes all injuries associated with the report, then deletes the report itself.
 
-```javascript
-import prisma from "../../../../lib/prisma";
-import { NextResponse } from 'next/server';
 
-export async function POST(req, res) {
-  const body = await req.json(); 
-  const { reportId } = body;
-
-  // (Database operations to delete the report and associated injuries)
-  return NextResponse.json(result);
-}
-```
 
 #### c. **Get Report**
 
@@ -70,17 +59,7 @@ export async function POST(req, res) {
   - Accepts a report ID as the request body.
   - Fetches all injury details associated with the report.
 
-```javascript
-import prisma from "../../../../lib/prisma";
-import { NextResponse } from 'next/server';
 
-export async function POST(req, res) {
-  const body = await req.json(); 
-  const { reportId } = body;
-
-  // (Database operations to fetch report details)
-  return NextResponse.json(result);
-}
 ```
 
 #### d. **Report Details**
@@ -144,53 +123,7 @@ The database is structured using the Prisma ORM, which simplifies interactions w
   - An `Admin` can be associated with multiple `Reports`.
   - A `Report` can have multiple `Injuries`.
 
-### Prisma Schema
 
-```prisma
-datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
-}
-
-model Report {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  injuryTime    DateTime
-  reporter      Reporter  @relation(fields: [reporterEmail], references: [email])
-  reporterEmail String    
-  admin         Admin     @relation(fields: [adminEmail], references: [email])
-  adminEmail    String    
-  injuries      Injury[]
-  createdAt     DateTime  @default(now())
-}
-
-model Reporter {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  email         String    @unique
-  name          String?
-  reports       Report[]  // Relation to the reports created for this reporter
-}
-
-model Admin {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  email         String    @unique
-  name          String?
-  adminReports  Report[]  // Relation to the reports created by this admin
-}
-
-model Injury {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  bodyPart      String
-  details       String
-  report        Report    @relation(fields: [reportId], references: [id], onDelete: Cascade)
-  reportId      String    @db.ObjectId
-}
-```
-
----
 
 ## Installation and Setup
 
