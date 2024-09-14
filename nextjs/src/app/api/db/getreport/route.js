@@ -54,7 +54,27 @@ export async function POST(req, res) {
     result = reports
   }
 
-  else if(method=="oldest"){
+  else if(method=="oldestreport"){
+    const reports = await prisma.report.findMany({
+      orderBy: {
+        createdAt: 'asc',
+      },
+    });
+
+    result = reports
+  }
+
+  else if(method=="latestreport"){
+    const reports = await prisma.report.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    result = reports
+  }
+
+  else if(method=="oldestinjury"){
     const reports = await prisma.report.findMany({
       orderBy: {
         injuryTime: 'asc',
@@ -64,7 +84,7 @@ export async function POST(req, res) {
     result = reports
   }
 
-  else if(method=="latest"){
+  else if(method=="latestinjury"){
     const reports = await prisma.report.findMany({
       orderBy: {
         injuryTime: 'desc',
@@ -74,7 +94,31 @@ export async function POST(req, res) {
     result = reports
   }
 
-  else if(method=="daterange"){
+  else if(method=="daterange-report"){
+    const startdate = body.startdate;
+    const enddate = body.enddate;
+
+    const reports = await prisma.report.findMany({
+      where: {
+        AND:[
+          {
+            createdAt: {
+              gte: startdate,
+            },
+          },
+          {
+            createdAt: {
+              lte: enddate,
+            },
+          },
+        ],
+      },
+    });
+
+    result = reports
+  }
+
+  else if(method=="daterange-injury"){
     const startdate = body.startdate;
     const enddate = body.enddate;
 

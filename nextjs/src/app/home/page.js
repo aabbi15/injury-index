@@ -72,22 +72,8 @@ const App = () => {
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>
       <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        >
-          {/* <div className='flex justify-end pr-10'> 
-
-          <ul className='flex gap-5'>
-            <li>Home</li>
-            <li>Services</li>
-            <li>About</li>
-            <li>Contact</li>
-          </ul>
-          </div> */}
-        </Header>
+       
+          
         <Content
           style={{
             margin: '0 16px',

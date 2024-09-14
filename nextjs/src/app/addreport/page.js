@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import Profile from '../components/Profile';
 import AddInjury from '../components/AddInjury';
 import ViewInjury from '../components/AllReports';
+import MySider from '../components/mysider';
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -85,29 +86,11 @@ const App = () => {
       }}
     >
 
-      <Sider sticky collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        
-        <div className="text-white" >
-           Abhishek 
-           
-           </div>
-
-        <Menu theme="dark" defaultSelectedKeys={['1']} onClick={e => ChangeContent(e)} mode="inline" items={items} >
-          
-        </Menu>
-
-      </Sider>
+      <MySider/>
 
 
       <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        >
       
-        </Header>
 
        {/* <Profile/> */}
        <AddInjury/>

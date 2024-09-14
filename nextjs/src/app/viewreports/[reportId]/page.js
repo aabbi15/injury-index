@@ -54,7 +54,7 @@ export default function ViewInjury({searchParams}){
     <MySider/>
 
       <Layout>
-        <MyHeader/>
+        {/* <MyHeader/> */}
       
         
 
