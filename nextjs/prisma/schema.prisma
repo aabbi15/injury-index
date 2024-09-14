@@ -45,7 +45,7 @@ model Injury {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   bodyPart      String
   details       String
-  report        Report    @relation(fields: [reportId], references: [id])
+  report        Report    @relation(fields: [reportId], references: [id], onDelete: Cascade)
   reportId      String    @db.ObjectId
 }
 
