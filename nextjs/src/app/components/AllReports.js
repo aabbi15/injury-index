@@ -1,57 +1,60 @@
+'use client'
+
+
 import React, { useEffect } from 'react';
 import { Space, Table, Tag } from 'antd';
 import axios from 'axios';
 import ReportDetails from './ReportDetails';
 
 
-const columns = [
-  {
-    title: 'Reporter',
-    dataIndex: 'reporter',
-    key: 'reporter',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Admin',
-    dataIndex: 'admin',
-    key: 'admin',
-  },
-  {
-    title: 'Date of injury',
-    dataIndex: 'date1',
-    key: 'date1',
-  },
-  {
-    title: 'Date of report',
-    key: 'date2',
-    dataIndex: 'date2',
-    
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_) => 
+import { useRouter } from 'next/navigation';
 
-        <Tag color="green" key="view" onClick={() =>{}}>
-              {_.key}
-            </Tag>
-    
-    ,
-  },
-];
+
 // let data = [];
 
-export default function ViewInjury(){
+export default function AllReports(){
+
+  const router = useRouter();
 
     const [req, setReq] = React.useState({method: "none"});
     const [data,setData] = React.useState([]);
 
-    const [reportId,setReportId] = React.useState("66e28930bb0d45ac972a0567");
-
-    if(reportId != ""){
-        return <ReportDetails reportId={reportId}/>
-    }
-
+  
+    const columns = [
+      {
+        title: 'Reporter',
+        dataIndex: 'reporter',
+        key: 'reporter',
+        render: (text) => <a>{text}</a>,
+      },
+      {
+        title: 'Admin',
+        dataIndex: 'admin',
+        key: 'admin',
+      },
+      {
+        title: 'Date of injury',
+        dataIndex: 'date1',
+        key: 'date1',
+      },
+      {
+        title: 'Date of report',
+        key: 'date2',
+        dataIndex: 'date2',
+        
+      },
+      {
+        title: 'Action',
+        key: 'action',
+        render: (_) => 
+    
+            <Tag color="green" key="view" className='cursor-pointer' onClick={() =>{router.push(`/viewreports/detailed?reportId=${_.key}`)}}>
+                  View More
+                </Tag>
+        
+        ,
+      },
+    ];
     console.log(req);
 
     useEffect(() => {
@@ -85,7 +88,7 @@ export default function ViewInjury(){
         });
 
         
-        console.log(data);
+        // console.log(data);
     },req,[]);
 
 

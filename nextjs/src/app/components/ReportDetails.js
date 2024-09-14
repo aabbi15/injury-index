@@ -5,6 +5,7 @@ import { Button, Flex } from 'antd';
 import { Descriptions } from 'antd';
 import axios from 'axios';
 import Loading from './Loading';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -13,6 +14,8 @@ const ReportDetails = ({reportId}) => {
 
 
   // console.log(reportId);
+
+  const router = useRouter();
 
   const [mydata,setData] = React.useState({adminName:"", reporterName:"", reporterEmail:"", adminEmail:"", injuryTime:"", createdAt:"",injuries:[]});
   const[loading,setLoading] = React.useState(true);
@@ -128,7 +131,7 @@ const ReportDetails = ({reportId}) => {
       </div>
 
       <div className='flex justify-center items-center gap-10 my-5'>
-      <Button type="primary">Go back</Button>
+      <Button type="primary" onClick={() => router.back()}>Go back</Button>
       <Button danger onClick={onDelete}>
         Delete Report
       </Button>

@@ -2,10 +2,7 @@
 
 import React, { useState } from 'react';
 import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
+  
   UserOutlined,
   SearchOutlined,
   PlusCircleOutlined,
@@ -16,11 +13,10 @@ import {
 
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 
+import { useRouter } from 'next/navigation';
 
 
-import Profile from './components/Profile';
-import AddInjury from './components/AddInjury';
-import ViewInjury from './components/AllReports';
+import AllReports from '../components/AllReports';
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -45,22 +41,17 @@ const App = () => {
   
 
 
-  // let items = [];
+    const router = useRouter();
 
   
   const items = [
-    getItem('Add new injury', '1', <PlusCircleOutlined />),
-    getItem('View added injuries', '2', <SearchOutlined />),
-    // getItem('User', 'sub1', <UserOutlined />, [
-    //   getItem('Tom', '3'),
-    //   getItem('Bill', '4'),
-    //   getItem('Alex', '5'),
-    // ]),
-    // getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-    getItem('Profile', '3', <UserOutlined />),
+    getItem('Add new report', 'addreport', <PlusCircleOutlined />),
+    getItem('View reports', 'viewreports', <SearchOutlined />),
+   
+    getItem('Profile', 'profile', <UserOutlined />),
     getItem('Logout', '4', <LogoutOutlined />),
   ];
-// }
+
 
   
 
@@ -74,10 +65,9 @@ const App = () => {
 
   function ChangeContent(e) {
 
-    console.log("hi");
-    // alert(e.key);
     setCurrPage(e.key);
-    console.log(currpage);
+    router.push(`/${e.key}`);
+    // console.log(currpage);
     
     
   }
@@ -91,7 +81,7 @@ const App = () => {
       }}
     >
 
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider sticky collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         
         <div className="text-white" >
            Abhishek 
@@ -99,7 +89,7 @@ const App = () => {
            </div>
 
         <Menu theme="dark" defaultSelectedKeys={['1']} onClick={e => ChangeContent(e)} mode="inline" items={items} >
-          {/* <div onClick={(e) => ChangeContent(e)}  className='w-full'/> */}
+          
         </Menu>
 
       </Sider>
@@ -118,7 +108,7 @@ const App = () => {
        {/* <Profile/> */}
        {/* <AddInjury/> */}
 
-       <ViewInjury/>
+       <AllReports/>
 
         <Footer
           style={{
