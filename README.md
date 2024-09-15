@@ -1,10 +1,27 @@
-### Project Documentation for Backend and Database
-
+### Project Documentation
 ---
 
 ## Project Overview
 
 This project is a Next.js application that implements an API to handle reporting incidents, such as injuries, with the use of Prisma as the ORM (Object-Relational Mapping) and MongoDB as the database. The backend consists of two main API routes: `auth` and `db`. The `auth` route is responsible for authentication using Auth0, while the `db` route manages database interactions for creating, retrieving, and deleting reports.
+
+
+## Snapshots
+
+### Add Injury Page 
+![image](https://github.com/user-attachments/assets/039a360e-6915-4a68-985c-ca18810f0096)
+
+### View Reports Page
+![image](https://github.com/user-attachments/assets/447bb7b3-15c3-48b6-b353-af48083af1d1)
+
+### Report Details Page
+![image](https://github.com/user-attachments/assets/07d0e388-0a92-4d2d-9628-0a696570eda3)
+
+
+###Login page
+![image](https://github.com/user-attachments/assets/d282f6ca-462c-437b-910f-f22ef8eb5619)
+
+
 
 ---
 
@@ -30,18 +47,7 @@ The `db` route has four main sub-routes:
   - Checks if the admin and reporter exist in the database; if not, they are created.
   - The injury details are associated with the newly created report, and each body part of the injury is stored in the database.
 
-```javascript
-import prisma from "../../../../lib/prisma";
-import { NextResponse } from 'next/server';
 
-export async function POST(req, res) {
-  const body = await req.json(); 
-  const { adminEmail, injuryDetails, reporterEmail, reporterName, injuryTime } = body;
-
-  // (Database operations to store the report and associated details)
-  return NextResponse.json(result);
-}
-```
 
 #### b. **Delete Report**
 
@@ -60,7 +66,7 @@ export async function POST(req, res) {
   - Fetches all injury details associated with the report.
 
 
-```
+
 
 #### d. **Report Details**
 
@@ -69,18 +75,6 @@ export async function POST(req, res) {
   - Accepts a report ID as the request body.
   - Fetches the report, along with the injuries, reporter details, and admin details associated with it.
 
-```javascript
-import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
-
-export async function POST(req,res){
-    const body = await req.json();
-    const reportId = body.reportId;
-
-    // (Database operations to fetch detailed report info)
-    return NextResponse.json({adminName, reporterName, reporterEmail, adminEmail, injuryTime, createdAt, injuries});
-}
-```
 
 ---
 
@@ -124,7 +118,7 @@ The database is structured using the Prisma ORM, which simplifies interactions w
   - A `Report` can have multiple `Injuries`.
 
 
-Here is the technical documentation for the frontend of your "Injury Index" application, specifically for the Next.js implementation. This documentation is intended for developers to understand the structure, functionality, and flow of the application.
+Here is the technical documentation for the frontend of "Injury Index" application, specifically for the Next.js implementation. This documentation is intended for developers to understand the structure, functionality, and flow of the application.
 
 ---
 
@@ -240,12 +234,6 @@ The frontend is structured with the following major components and pages:
   - Unauthenticated users attempting to access protected routes are redirected to `/login`.
   - Authenticated users attempting to access `/login` are redirected to `/profile`.
 
-## Conclusion
-This documentation provides an overview of the frontend architecture of the Injury Index application. It outlines the main pages, their functionality, and how they interact with each other. Developers should refer to this document to understand the flow of the application and the purpose of each page within the Next.js project.
-
---- 
-
-This documentation should give developers a clear understanding of how the frontend of the Injury Index application is structured and how to work with it. If you need more detailed explanations or additional sections, feel free to ask!
 
 ## Installation and Setup
 
@@ -299,10 +287,5 @@ This documentation should give developers a clear understanding of how the front
 
 ---
 
-## License
 
-This project is licensed under the MIT License.
 
----
-
-This documentation provides an overview of the backend structure, API routes, and database schema. It should help developers understand how to set up and use the project effectively.
