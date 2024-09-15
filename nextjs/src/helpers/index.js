@@ -118,4 +118,4 @@ function extractIDs(svgString) {
 
 // Using the function to get the object of ids
 const idsObject = extractIDs(x);
-console.log(idsObject);
+// console.log(idsObject);

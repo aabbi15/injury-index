@@ -29,7 +29,7 @@ const ReportDetails = ({reportId}) => {
         alert(response.data.error);
         return;
       }
-      console.log(response.data);
+      // console.log(response.data);
 
       setData(response.data);
       setLoading(false);
@@ -49,7 +49,7 @@ const ReportDetails = ({reportId}) => {
     let returner = [];
 
     mydata.injuries.map((injury) => {
-      console.log(injury);
+      // console.log(injury);
       returner.push(
         
         <Card title={injury.bodyPart} bordered={false}>

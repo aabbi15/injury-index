@@ -51,7 +51,7 @@ const LogoutModal = () => {
     
     };
     const handleCancel = () => {
-      console.log('Clicked cancel button');
+      // console.log('Clicked cancel button');
       setOpen(false);
     };
     return (
@@ -113,7 +113,7 @@ const MySider = () => {
       
       };
       const handleCancel = () => {
-        console.log('Clicked cancel button');
+        // console.log('Clicked cancel button');
         setOpen(false);
       };
 
@@ -145,6 +145,7 @@ const MySider = () => {
     
     setLoading(true);
     router.push(`/${e.key}`);
+
     setLoading(false);
     // console.log(currpage);
     
