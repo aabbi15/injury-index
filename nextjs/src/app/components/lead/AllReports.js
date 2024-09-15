@@ -16,6 +16,16 @@ const rangePresets = [
   { label: 'Last 90 Days', value: [dayjs().add(-90, 'd'), dayjs()] },
 ];
 
+function readable(isoDate) {
+  const date = new Date(isoDate);
+
+  // const readableDate = date.toLocaleDateString(); // "9/15/2024" (US format)
+  const readableDateTime = date.toLocaleString(); // "9/15/2024, 4:
+
+  return readableDateTime;
+}
+
+
 const AllReports = () => {
   const [req, setReq] = useState({ method: 'none' });
   const [data, setData] = useState([]);
@@ -115,14 +125,14 @@ const AllReports = () => {
   useEffect(() => {
     // if (req.method !== 'none') {
 
-    setLoading(true);
+    if(req.method === 'none') setLoading(true);
       axios.post('/api/db/getreport', req).then((response) => {
         const temp = response.data.map((row, index) => ({
           key: row.id,
           reporter: row.reporterEmail,
           admin: row.adminEmail,
-          date1: row.injuryTime,
-          date2: row.createdAt,
+          date1: readable(row.injuryTime),
+          date2: readable(row.createdAt),
         }));
         setData(temp);
         setLoading(false);

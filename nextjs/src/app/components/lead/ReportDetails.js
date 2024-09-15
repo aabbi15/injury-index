@@ -60,6 +60,15 @@ const ReportDetails = ({reportId}) => {
       return returner;
   }
 
+  function readable(isoDate) {
+    const date = new Date(isoDate);
+  
+    // const readableDate = date.toLocaleDateString(); // "9/15/2024" (US format)
+    const readableDateTime = date.toLocaleString(); // "9/15/2024, 4:
+  
+    return readableDateTime;
+  }
+
   const items = [
     {
       key: '1',
@@ -80,13 +89,13 @@ const ReportDetails = ({reportId}) => {
     {
       key: '5',
       label: 'Date of Injury',
-      children: mydata.injuryTime,
+      children: readable(mydata.injuryTime),
     },
   
     {
       key: '6',
       label: 'Date of Report',
-      children: mydata.createdAt,
+      children: readable(mydata.createdAt),
     },
   ];
   
