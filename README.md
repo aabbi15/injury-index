@@ -1,5 +1,4 @@
-### Project Documentation for Backend and Database
-
+### Project Documentation
 ---
 
 ## Project Overview
@@ -30,18 +29,7 @@ The `db` route has four main sub-routes:
   - Checks if the admin and reporter exist in the database; if not, they are created.
   - The injury details are associated with the newly created report, and each body part of the injury is stored in the database.
 
-```javascript
-import prisma from "../../../../lib/prisma";
-import { NextResponse } from 'next/server';
 
-export async function POST(req, res) {
-  const body = await req.json(); 
-  const { adminEmail, injuryDetails, reporterEmail, reporterName, injuryTime } = body;
-
-  // (Database operations to store the report and associated details)
-  return NextResponse.json(result);
-}
-```
 
 #### b. **Delete Report**
 
@@ -60,7 +48,7 @@ export async function POST(req, res) {
   - Fetches all injury details associated with the report.
 
 
-```
+
 
 #### d. **Report Details**
 
@@ -69,18 +57,6 @@ export async function POST(req, res) {
   - Accepts a report ID as the request body.
   - Fetches the report, along with the injuries, reporter details, and admin details associated with it.
 
-```javascript
-import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
-
-export async function POST(req,res){
-    const body = await req.json();
-    const reportId = body.reportId;
-
-    // (Database operations to fetch detailed report info)
-    return NextResponse.json({adminName, reporterName, reporterEmail, adminEmail, injuryTime, createdAt, injuries});
-}
-```
 
 ---
 
