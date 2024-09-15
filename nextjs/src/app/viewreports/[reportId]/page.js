@@ -7,17 +7,20 @@ import axios from 'axios';
 import ReportDetails from '@/app/components/lead/ReportDetails';
 import MySider from '@/app/components/layout/mysider';
 
+import { useSearchParams } from 'next/navigation'
 
 
 const { Header, Content, Footer, Sider } = Layout;
 
 
-export default function ViewInjury({searchParams}){
+export default function ViewInjury(){
 
 
    
-
-    const reportId = searchParams.reportId;
+  const searchParams = useSearchParams()
+ 
+  const reportId = searchParams.get('reportId')
+   
 
 
    console.log(reportId);
