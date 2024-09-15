@@ -16,19 +16,17 @@ import { useAuth0 } from "@auth0/nextjs-auth0";
 
 
 
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import {  Layout, Menu, theme } from 'antd';
 
 import { useRouter } from 'next/navigation';
 
-import Profile from '../components/Profile';
-import AddInjury from '../lead/AddReport';
-import ViewInjury from '../AllReports';
 
-import mylogo from '../../../public/lief-main-logo.svg';
+import mylogo from '../../../../public/lief-main-logo.svg';
 import Image from 'next/image';
+import Loading from '../support/Loading';
 
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Sider } = Layout;
 
 
 const LogoutModal = () => {
@@ -99,6 +97,7 @@ const MySider = () => {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
 
+    const [loading, setLoading] = useState(false);
 
     const showModal = () => {
         setOpen(true);
@@ -132,12 +131,8 @@ const MySider = () => {
 
 
   const [collapsed, setCollapsed] = useState(false);
-  const[currpage, setCurrPage] = useState(1);
 
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
+ 
   function ChangeContent(e) {
 
     // console.log("hi");
@@ -147,15 +142,18 @@ const MySider = () => {
         return;
     }
     
-    setCurrPage(e.key);
-
+    
+    setLoading(true);
     router.push(`/${e.key}`);
+    setLoading(false);
     // console.log(currpage);
     
     
   }
 
   
+
+  if(loading){return <Loading/>}
 
   return (
     

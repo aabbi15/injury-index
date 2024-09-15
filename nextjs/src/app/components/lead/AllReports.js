@@ -5,6 +5,7 @@ import { Space, Table, Tag, Select, DatePicker, Input } from 'antd';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
+import Loading from '../support/Loading';
 
 const { RangePicker } = DatePicker;
 
@@ -22,6 +23,8 @@ const AllReports = () => {
   const [reporterEmail, setReporterEmail] = useState('');
   const [dateRange, setDateRange] = useState([]);
   const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
 
   const columns = [
     {
@@ -42,6 +45,8 @@ const AllReports = () => {
           key="view"
           className="cursor-pointer"
           onClick={() => {
+
+            setLoading(true);
             router.push(`/viewreports/detailed?reportId=${_.key}`);
           }}
         >
@@ -52,7 +57,7 @@ const AllReports = () => {
   ];
 
   const options = [
-    { value: 'admin', label: 'My Reports Only' },
+    
     { value: 'reporter', label: 'Search by Reporter Email' },
     { value: 'oldestreport', label: 'Oldest Reports First' },
     { value: 'latestreport', label: 'Latest Reports First' },
@@ -60,7 +65,8 @@ const AllReports = () => {
     { value: 'latestinjury', label: 'Latest Injury Dates First' },
     { value: 'daterange-report', label: 'Reports by Date Range' },
     { value: 'daterange-injury', label: 'Injuries by Date Range' },
-    {value: 'none', label: 'none'}
+    { value: 'admin', label: 'My Reports Only' },
+    {value: 'none', label: 'None'}
   ];
 
   const handleChange = (value) => {
@@ -122,6 +128,9 @@ const AllReports = () => {
       });
     // }
   }, [req],[]);
+
+
+  if(loading) {return <Loading/>}
 
   return (
     <div>

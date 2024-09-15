@@ -16,7 +16,7 @@ import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { useRouter } from 'next/navigation';
 
 
-import AllReports from '../components/AllReports';
+import AllReports from '../components/lead/AllReports';
 import MySider from '../components/layout/mysider';
 
 

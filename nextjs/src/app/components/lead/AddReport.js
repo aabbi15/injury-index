@@ -13,6 +13,7 @@ import InjuryInputCard from '../support/injuryinputcard';
 import { convertToMongoDateTime } from '@/helpers/datetime';
 
 import axios from 'axios';
+import Loading from '../support/Loading';
 
 
 
@@ -20,12 +21,15 @@ const { Content } = Layout;
 
 export default function AddReport() {
 
+  const router = useRouter();
+
   // adminEmail, injuryDetails, reporterEmail,reporterName, injuryTime
 
 
       
   const { user, error, isLoading } = useUser();
 
+  const [loading, setLoading] = useState(false);
   const [reporterEmail,setreporterEmail] = useState("");
   const [reporterName,setreporterName] = useState("");
   
@@ -130,13 +134,14 @@ export default function AddReport() {
     const adminEmail = user.email;
 
     
-
+    setLoading(true);
     const req = {adminEmail, injuryDetails, reporterEmail,reporterName, injuryTime};
 
     axios.post('/api/db/addreport', req)
     .then(function (response) {
 
       alert("Report added successfully");
+      router.push('/viewreports');
       // window.location.reload();
       setreporterName("");
       // console.log(response);
@@ -505,6 +510,7 @@ export default function AddReport() {
 }
 
 
+if(loading) return <Loading/>
 
   return (
     <div>

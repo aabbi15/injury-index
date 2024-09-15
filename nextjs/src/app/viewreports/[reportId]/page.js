@@ -4,9 +4,9 @@
 import React, { useEffect } from 'react';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import axios from 'axios';
-import ReportDetails from '@/app/components/ReportDetails';
-import MySider from '@/app/components/mysider';
-import MyHeader from '@/app/components/myheader';
+import ReportDetails from '@/app/components/lead/ReportDetails';
+import MySider from '@/app/components/layout/mysider';
+// import MyHeader from '@/app/components/myheader';
 
 // import { useRouter } from 'next/navigation';
 
