@@ -126,6 +126,8 @@ const AllReports = () => {
     // if (req.method !== 'none') {
 
     if(req.method === 'none') setLoading(true);
+
+    
       axios.post('/api/db/getreport', req).then((response) => {
         const temp = response.data.map((row, index) => ({
           key: row.id,
