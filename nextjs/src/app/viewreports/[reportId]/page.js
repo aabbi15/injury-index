@@ -2,7 +2,7 @@
 
 
 import React, { useEffect } from 'react';
-import {  Layout } from 'antd';
+import {  Layout, Breadcrumb } from 'antd';
 import axios from 'axios';
 import ReportDetails from '@/app/components/lead/ReportDetails';
 import MySider from '@/app/components/layout/mysider';
@@ -23,7 +23,7 @@ export default function ViewInjury(){
    
 
 
-   console.log(reportId);
+  //  console.log(reportId);
 
 
     
@@ -42,7 +42,14 @@ export default function ViewInjury(){
       <Layout>
        
       
-        
+      <Breadcrumb
+          style={{
+            margin: '16px 16px',
+          }}
+        >
+          <Breadcrumb.Item>View Report</Breadcrumb.Item>
+          <Breadcrumb.Item>Injury Details</Breadcrumb.Item>
+        </Breadcrumb>
 
         <ReportDetails reportId={reportId}/>
 

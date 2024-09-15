@@ -114,6 +114,8 @@ const AllReports = () => {
 
   useEffect(() => {
     // if (req.method !== 'none') {
+
+    setLoading(true);
       axios.post('/api/db/getreport', req).then((response) => {
         const temp = response.data.map((row, index) => ({
           key: row.id,
@@ -123,10 +125,13 @@ const AllReports = () => {
           date2: row.createdAt,
         }));
         setData(temp);
+        setLoading(false);
       }).catch((error) => {
         console.error(error);
       });
     // }
+
+    
   }, [req],[]);
 
 

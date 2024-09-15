@@ -16,7 +16,7 @@ export async function POST(req,res){
 
     const reportId = body.reportId;
 
-    console.log(reportId,"from route");
+    // console.log(reportId,"from route");
 
 
 
@@ -43,7 +43,7 @@ export async function POST(req,res){
         }
     })
 
-    console.log(report,"fetched from route");
+    // console.log(report,"fetched from route");
 
 
 

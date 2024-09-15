@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Card, Col, Row } from 'antd';
+import { Card, Col, Breadcrumb } from 'antd';
 import { Button, Flex } from 'antd';
 
 import { Descriptions } from 'antd';
@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 const ReportDetails = ({reportId}) => {
 
 
-  console.log(reportId,"from fxn");
+  // console.log(reportId,"from fxn");
 
   const router = useRouter();
 
@@ -102,7 +102,7 @@ const ReportDetails = ({reportId}) => {
       // console.log(response.data);
       setLoading(false);
       alert("Report deleted successfully");
-      window.location.href = '/';
+      router.back();
     }).catch((error) => {
       console.log(error);
     });
@@ -113,6 +113,7 @@ const ReportDetails = ({reportId}) => {
   return(
 
     <div className='mt-10 mx-5'>
+
 
       <div>
       <Descriptions bordered labelStyle={{"fontWeight":"700"}} title="Report Info" items={items} />;
