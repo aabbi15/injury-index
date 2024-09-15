@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 const ReportDetails = ({reportId}) => {
 
 
-  // console.log(reportId);
+  console.log(reportId,"from fxn");
 
   const router = useRouter();
 
