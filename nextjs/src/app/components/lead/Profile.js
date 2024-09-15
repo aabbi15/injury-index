@@ -9,7 +9,7 @@ export default function Profile() {
 
     const { user, error, isLoading } = useUser();
 
-    console.log(user, error);
+    // console.log(user, error);
 
     return (
         <div>

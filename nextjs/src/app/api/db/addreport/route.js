@@ -27,7 +27,6 @@ const result = []
     },
   });
 
-  // console.log(adminpresent.length);
 
   if(adminpresent.length === 0){
     

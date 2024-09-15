@@ -45,7 +45,7 @@ const LogoutModal = () => {
       
       setConfirmLoading(true);
         
-        logout({ logoutParams: { returnTo: "http://localhost:3000/login" } });
+        logout({ logoutParams: { returnTo: "/login" } });
         setOpen(false);
         setConfirmLoading(false);
     

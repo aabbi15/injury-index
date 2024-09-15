@@ -99,7 +99,7 @@ const ReportDetails = ({reportId}) => {
         alert(response.data.error);
         return;
       }
-      console.log(response.data);
+      // console.log(response.data);
       setLoading(false);
       alert("Report deleted successfully");
       window.location.href = '/';

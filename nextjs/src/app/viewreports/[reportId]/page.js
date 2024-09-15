@@ -36,7 +36,7 @@ export default function ViewInjury({searchParams}){
     const eg = "66e28930bb0d45ac972a0567";
 
    
-    console.log(req);
+    // console.log(req);
 
 
 
